@@ -81,8 +81,6 @@ Home (index.html)
 └── README.md
 ```
 
-## Part 1 Details
-### Proposal Summary
 
 ## Part 1 Details
 
@@ -170,9 +168,7 @@ The JavaScript and SEO work focused on interactivity, usability, and discoverabi
 
 
 ## Changelog
-Use reverse chronological order.
-## Changelog
-(Reverse chronological order)
+Use reverse chronological order
 
 **2026‑06‑15**  
 - Website deployed via GitHub Pages/Netlify.  
