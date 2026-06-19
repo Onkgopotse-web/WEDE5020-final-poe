@@ -8,7 +8,7 @@
 - **Module:** Web Development (Introduction) - WEDE5020
 - **Lecturer:** [Thabo Mofokeng]
 - **Selected Organisation:** [Sweet Heaven's Bakery]
-- **Repository URL:** [Paste GitHub repository link here]
+- **Repository URL:** [https://github.com/Onkgopotse-web/WEDE5020-final-poe.git]
 - **Deployed Website URL:** [Paste deployment link here in Part 3]
 
 ## Project Overview
