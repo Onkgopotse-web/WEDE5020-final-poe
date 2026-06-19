@@ -1,8 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://example.com/</loc></url>
-  <url><loc>https://example.com/about.html</loc></url>
-  <url><loc>https://example.com/services.html</loc></url>
-  <url><loc>https://example.com/enquiry.html</loc></url>
-  <url><loc>https://example.com/contact.html</loc></url>
+
+  <url>
+    <loc>https://sweetheavenbakery.co.za/index.html</loc>
+  </url>
+
+  <url>
+    <loc>https://sweetheavenbakery.co.za/about.html</loc>
+  </url>
+
+  <url>
+    <loc>https://sweetheavenbakery.co.za/products.html</loc>
+  </url>
+
+  <url>
+    <loc>https://sweetheavenbakery.co.za/contact.html</loc>
+  </url>
+
+  <url>
+    <loc>https://sweetheavenbakery.co.za/enquiry.html</loc>
+  </url>
+
 </urlset>
