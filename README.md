@@ -101,7 +101,7 @@ Use reverse chronological order.
 ![image alt]()
 
 ### Mobile
-![image alt]()
+![image alt](https://github.com/Onkgopotse-web/WEDE5020-final-poe/blob/d9245f113e6f38af13eb5ef26d6dbe703d7eb850/assets/MobileHome.png)
 
 ## References
 > Use the required institutional referencing style consistently.
