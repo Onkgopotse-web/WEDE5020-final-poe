@@ -9,7 +9,7 @@
 - **Lecturer:** [Thabo Mofokeng]
 - **Selected Organisation:** [Sweet Heaven's Bakery]
 - **Repository URL:** [https://github.com/Onkgopotse-web/WEDE5020-final-poe.git]
-- **Deployed Website URL:** [Paste deployment link here in Part 3]
+- **Deployed Website URL:** [https://onkgopotse-web.github.io/WEDE5020-final-poe/]
 
 ## Project Overview
 Sweet Heaven’s Bakery is a family‑inspired brand known for its pink‑beige‑white theme and signature pastries. The purpose of the website is to showcase baked goods, share the bakery’s story, and provide customers with an easy way to connect, explore menus, and place enquiries online.  
