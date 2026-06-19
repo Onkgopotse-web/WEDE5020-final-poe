@@ -94,17 +94,14 @@ Use reverse chronological order.
 
 ## Screenshots
 ### Desktop
-Add screenshots here.
-![image alt]() 
-![image alt]()
-![image alt]()
+![image alt](https://github.com/Onkgopotse-web/WEDE5020-final-poe/blob/469ca831c4c85f21bb40811086e106d6f51672ba/assets/DesktopHome..png) 
 
 
 ### Tablet
-Add screenshots here.
+![image alt]()
 
 ### Mobile
-Add screenshots here.
+![image alt]()
 
 ## References
 > Use the required institutional referencing style consistently.
