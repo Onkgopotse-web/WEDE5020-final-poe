@@ -1,0 +1,922 @@
+/* ==========================================================================
+   STYLE SHEET — Brand theme: pink / white
+   Structure:
+   1. Custom properties (design tokens)
+   2. Reset
+   3. Typographic system (headings, body, labels, product text, footer)
+   4. Layout containers
+   5. Header & navigation
+   6. Hero
+   7. Buttons & interactive states
+   8. Card grouping (products / contact)
+   9. Forms
+   10. Footer
+   11. Responsive breakpoints
+   ========================================================================== */
+
+/* --------------------------------------------------------------------
+   1. CUSTOM PROPERTIES
+   -------------------------------------------------------------------- */
+:root {
+  /* colour */
+  --primary: #1f1b24;
+  /* dark text colour, used for headings/footer bg */
+  --secondary: #fe78c4;
+  /* brand pink — hero, accents, links in dark areas */
+  --accent: #d6488f;
+  /* deeper pink — buttons, focus states, hover */
+  --accent-dark: #ad3470;
+  /* pressed/active state for buttons and links */
+  --text: #333333;
+  /* body copy colour */
+  --text-muted: #6b6470;
+  /* secondary/quiet text, footer copy */
+  --light: #ffffff;
+  /* white surfaces — cards, header, form */
+  --border: #eadbe3;
+  /* soft pink-tinted border colour */
+  --bg-page: #fff5fa;
+  /* pale pink page background */
+  --price: #ad3470;
+  /* dedicated colour for product prices */
+
+  /* shadow */
+  --shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  --shadow-hover: 0 14px 32px rgba(214, 72, 143, 0.18);
+
+  /* type scale — fluid with clamp() so headings are never capped to one size */
+  --fs-h1: clamp(2rem, 1.4rem + 2.5vw, 3.25rem);
+  --fs-h2: clamp(1.5rem, 1.2rem + 1.4vw, 2.25rem);
+  --fs-h3: clamp(1.2rem, 1.05rem + 0.6vw, 1.5rem);
+  --fs-body: clamp(1rem, 0.95rem + 0.2vw, 1.0625rem);
+  --fs-label: clamp(0.85rem, 0.8rem + 0.1vw, 0.95rem);
+  --fs-price: clamp(1.1rem, 1rem + 0.4vw, 1.35rem);
+  --fs-footer: clamp(0.8rem, 0.78rem + 0.1vw, 0.9rem);
+
+  /* font families */
+  --ff-heading: Georgia, 'Times New Roman', serif;
+  --ff-body: Arial, Helvetica, sans-serif;
+}
+
+
+/* --------------------------------------------------------------------
+   2. RESET
+   Universal selector removes default browser spacing and unifies
+   box-sizing so padding/border never break layout widths.
+   -------------------------------------------------------------------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--ff-body);
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  color: var(--text);
+  background-color: var(--bg-page);
+}
+
+img,
+iframe {
+  max-width: 100%;
+  border: 0;
+  display: block;
+}
+
+
+/* --------------------------------------------------------------------
+   3. TYPOGRAPHIC SYSTEM
+   Each text role (heading / body / label / product / footer) has its
+   own deliberate font-family, size, weight and letter-spacing so the
+   hierarchy reads clearly at a glance.
+   -------------------------------------------------------------------- */
+
+/* Headings — serif family for editorial contrast against the body sans-serif */
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--ff-heading);
+  color: var(--primary);
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+h1 {
+  font-size: var(--fs-h1);
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  font-size: var(--fs-h2);
+  margin-bottom: 0.75rem;
+}
+
+h3 {
+  font-size: var(--fs-h3);
+  color: var(--accent-dark);
+}
+
+/* Body text */
+p {
+  font-size: var(--fs-body);
+  color: var(--text);
+  margin-bottom: 1rem;
+}
+
+/* Labels — distinct from body copy: smaller, bolder, uppercase tracking */
+label {
+  display: block;
+  font-family: var(--ff-body);
+  font-size: var(--fs-label);
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin-bottom: 0.25rem;
+}
+
+/* Product names and prices — separated visually so price always pops */
+.product-name {
+  font-family: var(--ff-heading);
+  font-size: var(--fs-h3);
+  color: var(--primary);
+  margin-bottom: 0.25rem;
+}
+
+.product-price {
+  font-family: var(--ff-body);
+  font-size: var(--fs-price);
+  font-weight: 700;
+  color: var(--price);
+  letter-spacing: 0.01em;
+}
+
+/* Footer text — quiet, smaller, muted tone, sits apart from body text */
+.site-footer,
+.site-footer p,
+.site-footer .small-text {
+  font-family: var(--ff-body);
+  font-size: var(--fs-footer);
+  color: var(--text-muted);
+  letter-spacing: 0.01em;
+}
+
+.small-text {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+
+/* --------------------------------------------------------------------
+   4. LAYOUT CONTAINER
+   -------------------------------------------------------------------- */
+.container {
+  width: min(1100px, 92%);
+  margin: 0 auto;
+}
+
+main {
+  padding: 2rem 0 3rem;
+}
+
+
+/* --------------------------------------------------------------------
+   5. HEADER & NAVIGATION
+   Nav now sits inside a flex container with explicit alignment rules
+   and its own background/border, instead of floating bare links.
+   -------------------------------------------------------------------- */
+.site-header {
+  background: var(--light);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.header-layout {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 0;
+}
+
+.site-tag {
+  margin: 0;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+
+/* Stronger nav container: padded pill-shaped bar with its own background
+   so navigation reads as a distinct, intentional UI element */
+.nav-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.4rem;
+  list-style: none;
+  background: var(--bg-page);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.4rem;
+}
+
+.nav-list a {
+  display: inline-block;
+  text-decoration: none;
+  color: var(--primary);
+  font-weight: 600;
+  font-size: 0.92rem;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.nav-list a:hover,
+.nav-list a:focus {
+  color: var(--light);
+  background-color: var(--accent);
+  text-decoration: none;
+  outline: none;
+}
+
+.nav-list a:focus-visible {
+  outline: 2px solid var(--accent-dark);
+  outline-offset: 2px;
+}
+
+/* Active state — for the current page link, add class="is-active" in HTML */
+.nav-list a:active,
+.nav-list a.is-active {
+  background-color: var(--accent-dark);
+  color: var(--light);
+}
+
+
+/* --------------------------------------------------------------------
+   6. HERO
+   -------------------------------------------------------------------- */
+.hero {
+  background: linear-gradient(120deg, var(--secondary), var(--accent));
+  color: var(--light);
+  padding: 4rem 0;
+}
+
+.hero h1 {
+  color: var(--light);
+}
+
+
+/* --------------------------------------------------------------------
+   7. BUTTONS & INTERACTIVE ELEMENTS
+   Every interactive element gets hover, focus AND active states.
+   -------------------------------------------------------------------- */
+.button {
+  display: inline-block;
+  padding: 0.75rem 1.4rem;
+  background: var(--accent);
+  color: var(--light);
+  border: 2px solid var(--accent);
+  border-radius: 0.5rem;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease,
+    transform 0.15s ease, box-shadow 0.2s ease;
+}
+
+.button:hover,
+.button:focus {
+  background: var(--accent-dark);
+  border-color: var(--accent-dark);
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-2px);
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+}
+
+.button:active {
+  background: var(--primary);
+  border-color: var(--primary);
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* Generic link active state, used outside nav/buttons (e.g. footer links) */
+a:active {
+  color: var(--accent-dark);
+}
+
+
+/* --------------------------------------------------------------------
+   8. CONTENT GROUPING — Cards for products & contact info
+   -------------------------------------------------------------------- */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  margin: 1.5rem 0;
+}
+
+.card {
+  background: var(--light);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  padding: 1.25rem;
+  box-shadow: var(--shadow);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.card:hover,
+.card:focus-within {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover);
+  border-color: var(--secondary);
+}
+
+/* Product card — image, name, price grouped with consistent spacing */
+.product-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.product-card img {
+  border-radius: 0.65rem;
+  margin-bottom: 0.25rem;
+}
+
+/* Contact section — groups address/phone/email/hours as distinct cards
+   instead of bare paragraphs */
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.25rem;
+  margin: 1.5rem 0;
+}
+
+.contact-card {
+  background: var(--light);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--secondary);
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+  box-shadow: var(--shadow);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.contact-card:hover {
+  border-left-color: var(--accent-dark);
+  box-shadow: var(--shadow-hover);
+}
+
+.contact-card h3 {
+  margin-bottom: 0.4rem;
+}
+
+
+/* --------------------------------------------------------------------
+   9. FORMS
+   -------------------------------------------------------------------- */
+form {
+  background: var(--light);
+  color: var(--text);
+  padding: 1.5rem;
+  border-radius: 1rem;
+  box-shadow: var(--shadow);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-bottom: 1rem;
+}
+
+input,
+select,
+textarea {
+  padding: 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  font: inherit;
+  font-size: 1rem;
+  /* prevents iOS auto-zoom on focus */
+  color: var(--text);
+  background: var(--light);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input:hover,
+select:hover,
+textarea:hover {
+  border-color: var(--secondary);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-color: var(--accent);
+}
+
+input:active,
+select:active,
+textarea:active {
+  border-color: var(--accent-dark);
+}
+
+.error-message {
+  color: #b91c1c;
+  min-height: 1rem;
+  font-size: 0.9rem;
+}
+
+.response-box {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-left: 4px solid var(--accent);
+  background: #ecfeff;
+  color: var(--text);
+}
+
+
+/* --------------------------------------------------------------------
+   10. FOOTER
+   -------------------------------------------------------------------- */
+.site-footer {
+  background: var(--primary);
+  padding: 1.5rem 0;
+}
+
+.site-footer a {
+  color: var(--secondary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.site-footer a:hover,
+.site-footer a:focus {
+  color: var(--light);
+  text-decoration: underline;
+}
+
+.site-footer a:active {
+  color: var(--accent-dark);
+}
+
+
+/* --------------------------------------------------------------------
+   11. RESPONSIVE BREAKPOINTS
+   Desktop default above. Three breakpoints below cover large tablets,
+   small tablets/large phones, and small phones.
+   -------------------------------------------------------------------- */
+
+/* Large tablets / small laptops */
+@media (max-width: 1024px) {
+  .card-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+
+  .container {
+    width: min(1100px, 94%);
+  }
+}
+
+/* Tablets */
+@media (max-width: 900px) {
+  .header-layout {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .nav-list {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .card-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Large phones / small tablets */
+@media (max-width: 700px) {
+  html {
+    font-size: 15.5px;
+  }
+
+  .hero {
+    padding: 3rem 0;
+  }
+
+  .card-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.85rem;
+  }
+
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Small phones */
+@media (max-width: 600px) {
+  html {
+    font-size: 15px;
+  }
+
+  .nav-list {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    border-radius: 0.75rem;
+  }
+
+  .nav-list a {
+    text-align: center;
+  }
+
+  .card-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero {
+    padding: 2.5rem 0;
+  }
+}
+
+/* Very small phones */
+@media (max-width: 400px) {
+  html {
+    font-size: 14px;
+  }
+
+  form,
+  .card,
+  .contact-card {
+    padding: 1rem;
+  }
+
+  .button {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+
+/* ==========================================================================
+   12. JAVASCRIPT-DRIVEN UI — Lightbox, form validation states,
+       response messages, map toggle, search/filter controls
+   ========================================================================== */
+
+/* --------------------------------------------------------------------
+   12a. FORM VALIDATION STATES
+   Applied by contact.js / enquiry.js via classList.toggle()
+   -------------------------------------------------------------------- */
+.input-invalid {
+  border-color: #b91c1c !important;
+  background-color: #fef2f2;
+}
+
+.input-invalid:focus {
+  outline-color: #b91c1c;
+}
+
+.field-error {
+  color: #b91c1c;
+  font-size: 0.85rem;
+  min-height: 1.1rem;
+  margin-top: 0.15rem;
+}
+
+/* --------------------------------------------------------------------
+   12b. RESPONSE BOX VARIANTS
+   Base .response-box already exists; these add success/error states.
+   -------------------------------------------------------------------- */
+.response-box--success {
+  border-left-color: #15803d;
+  background: #f0fdf4;
+  color: #14532d;
+}
+
+.response-box--error {
+  border-left-color: #b91c1c;
+  background: #fef2f2;
+  color: #7f1d1d;
+}
+
+/* --------------------------------------------------------------------
+   12c. GALLERY LIGHTBOX
+   Built and toggled by main.js. Sits fixed over the whole viewport.
+   -------------------------------------------------------------------- */
+.lightbox-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(31, 27, 36, 0.92);
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 2rem;
+}
+
+.lightbox-overlay.is-open {
+  display: flex;
+}
+
+body.lightbox-active {
+  overflow: hidden;
+}
+
+.lightbox-image {
+  max-width: 90vw;
+  max-height: 80vh;
+  border-radius: 0.5rem;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+.lightbox-caption {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--light);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.lightbox-close,
+.lightbox-prev,
+.lightbox-next {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--light);
+  border: none;
+  cursor: pointer;
+  font-size: 1.75rem;
+  line-height: 1;
+  border-radius: 999px;
+  width: 2.75rem;
+  height: 2.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease, transform 0.15s ease;
+}
+
+.lightbox-close:hover,
+.lightbox-prev:hover,
+.lightbox-next:hover {
+  background: var(--accent);
+}
+
+.lightbox-close:active,
+.lightbox-prev:active,
+.lightbox-next:active {
+  transform: scale(0.92);
+}
+
+.lightbox-close {
+  top: 1.25rem;
+  right: 1.25rem;
+}
+
+.lightbox-prev {
+  left: 1.25rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.lightbox-next {
+  right: 1.25rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* --------------------------------------------------------------------
+   12d. INTERACTIVE MAP (Enquiry page)
+   -------------------------------------------------------------------- */
+.map-wrapper {
+  margin: 1.5rem 0;
+}
+
+.map-frame {
+  width: 100%;
+  height: 280px;
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  box-shadow: var(--shadow);
+  transition: height 0.3s ease;
+}
+
+.map-frame--expanded {
+  height: 480px;
+}
+
+.map-toggle {
+  margin-top: 0.75rem;
+}
+
+/* --------------------------------------------------------------------
+   12e. PRODUCT SEARCH + CATEGORY FILTER (Products page)
+   -------------------------------------------------------------------- */
+.search-bar {
+  margin: 1.5rem 0 0.5rem;
+}
+
+#product-search {
+  width: 100%;
+  max-width: 360px;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font: inherit;
+  font-size: 1rem;
+}
+
+#product-search:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-color: var(--accent);
+}
+
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0.75rem 0 1.25rem;
+}
+
+.filter-bar button {
+  padding: 0.5rem 1.1rem;
+  border: 1px solid var(--border);
+  background: var(--light);
+  color: var(--primary);
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.filter-bar button:hover,
+.filter-bar button:focus {
+  border-color: var(--accent);
+  color: var(--accent-dark);
+}
+
+.filter-bar button.is-active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--light);
+}
+
+.filter-bar button:active {
+  background: var(--accent-dark);
+  border-color: var(--accent-dark);
+  color: var(--light);
+}
+
+#no-results-message {
+  display: none;
+  text-align: center;
+  color: var(--text-muted);
+  padding: 2rem 0;
+}
+
+/* Active nav state set by main.js to mark current page */
+.nav-list a.is-active {
+  background-color: var(--accent-dark);
+  color: var(--light);
+}
+
+
+/* ==========================================================================
+   13. HAMBURGER MENU (pure CSS — no JavaScript needed)
+   Uses a hidden checkbox + label trick:
+   1. A real checkbox is hidden visually but stays in the DOM
+   2. The label (styled as 3 lines) toggles the checkbox when clicked
+   3. CSS uses the :checked pseudo-class + sibling selector (~) to
+      show/hide the nav links based on whether the checkbox is ticked
+   ========================================================================== */
+
+/* The checkbox itself is invisible-it only tracks open/ closed state*/
+#menu-toggle {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+/* The hamburger icon — 3 lines made from a label + spans.
+   Hidden on desktop by default, shown only in the mobile breakpoint below. */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 2.5rem;
+  height: 2.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+.hamburger span {
+  display: block;
+  width: 100%;
+  height: 3px;
+  background-color: var(--primary);
+  border-radius: 3px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* When the checkbox is checked, animate the 3 lines into an "X" shape.
+   The ~ is the general sibling selector — it selects any later sibling
+   that matches, so #menu-toggle:checked ~ .hamburger means
+   "the .hamburger that comes after a checked #menu-toggle". */
+
+#menu-toggle:checked~.hamburger span:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+
+#menu-toggle:checked~.hamburger span:nth-child(2) {
+  opacity: 0;
+}
+
+#menu-toggle:checked~.hamburger span:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+/* On mobile: show the hamburger icon, and hide nav links until opened */
+@media (max-width: 700px) {
+
+  .hamburger {
+    display: flex;
+  }
+
+  .nav-list {
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: var(--light);
+    border: 1px solid var(--border);
+    border-radius: 0 0 0.75rem 0.75rem;
+    box-shadow: var(--shadow);
+    padding: 0.5rem;
+    z-index: 20;
+  }
+
+  /* When the checkbox is checked (hamburger tapped), reveal the nav list */
+  #menu-toggle:checked~.nav-list {
+    display: flex;
+  }
+
+  .nav-list a {
+    text-align: center;
+    width: 100%;
+  }
+
+  /* header-layout needs relative positioning so the dropdown nav
+     can be absolutely positioned against it */
+  .header-layout {
+    position: relative;
+  }
+}
+/* BACKGROUND IMAGE*/
+
+.hero {
+  position: relative;
+}
+
+.hero img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
