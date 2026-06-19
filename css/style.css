@@ -824,7 +824,7 @@ body.lightbox-active {
   opacity: 0;
   width: 0;
   height: 0;
-  pointer-events: none;
+  pointer-events: visiblePainted;  
 }
 
 /* The hamburger icon — 3 lines made from a label + spans.
@@ -889,7 +889,9 @@ body.lightbox-active {
   }
 
   /* When the checkbox is checked (hamburger tapped), reveal the nav list */
-  #menu-toggle:checked~.nav-list {display: flex;}
+  #menu-toggle:checked~.nav-list {
+    display: flex;
+  }
 
   .nav-list a {
     text-align: center;
@@ -902,4 +904,3 @@ body.lightbox-active {
     position: relative;
   }
 }
-
