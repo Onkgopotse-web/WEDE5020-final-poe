@@ -6,9 +6,7 @@
    - Skill: Form Functionality — Contact Controls
    - Skill: Form Functionality — Contact Validation
    - Skill: Form Functionality — Contact Process Email
-     (simulated client-side, as no real email service is connected yet.
-     To send real emails later, see the EmailJS notes at the bottom
-     of this file.)
+     (connected to EmailJS — sends a real email when the form is submitted)
 
    References used while building this:
    - MDN Web Docs, Constraint Validation:
@@ -19,7 +17,22 @@
      https://www.w3schools.com/js/js_validation.asp
    - W3Schools, JS RegExp:
      https://www.w3schools.com/js/js_regexp.asp
+   - EmailJS Documentation, Send a form:
+     https://www.emailjs.com/docs/sdk/send/
    ========================================================================== */
+
+/* EmailJS account keys (from emailjs.com dashboard)
+   Public Key  -> Account > General
+   Service ID  -> Email Services
+   Template ID -> Email Templates */
+var EMAILJS_PUBLIC_KEY  = 'TxYW2dmh2fFCAnwLo';
+var EMAILJS_SERVICE_ID  = 'service_u41xl5p';
+var EMAILJS_TEMPLATE_ID = 'template_5ctkjfg';
+
+// Initialise EmailJS once, as soon as this script loads
+if (typeof emailjs !== 'undefined') {
+  emailjs.init(EMAILJS_PUBLIC_KEY);
+}
 
 document.addEventListener('DOMContentLoaded', function () {
 
@@ -148,23 +161,13 @@ document.addEventListener('DOMContentLoaded', function () {
       }
       return;
     }
-<<<<<<< Updated upstream
 
     /* ----------------------------------------------------------------
-       SIMULATED EMAIL PROCESSING
-       This site is not yet connected to a real email service.
-       Below is a simulated send: button shows a "Sending..." state,
-       then the form resets and a success message displays.
-
-       TO CONNECT A REAL EMAIL SERVICE LATER (EmailJS example):
-       1. Create a free account at https://www.emailjs.com
-       2. Get your Service ID, Template ID and Public Key
-       3. Add the EmailJS SDK script tag to contact.html:
-            <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-       4. Replace the setTimeout() block below with:
-            emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', form, 'YOUR_PUBLIC_KEY')
-              .then(function () { showSuccess(); })
-              .catch(function () { showFailure(); });
+       REAL EMAIL PROCESSING — EmailJS
+       Sends the actual form fields to your connected email service.
+       emailjs.sendForm reads input names directly from the <form>,
+       so field "name" attributes must match your EmailJS template
+       variables (e.g. {{name}}, {{email}}, {{phone}}, {{message}}).
        ---------------------------------------------------------------- */
 
     if (submitBtn) {
@@ -172,27 +175,33 @@ document.addEventListener('DOMContentLoaded', function () {
       submitBtn.textContent = 'Sending...';
     }
 
-    setTimeout(function () {
-      if (responseBox) {
-        responseBox.textContent =
-          'Thank you, ' + nameField.value.trim() + '! Your message has been received. ' +
-          'We will get back to you at ' + emailField.value.trim() + ' within 1-2 business days.';
-        responseBox.className = 'response-box response-box--success';
-        responseBox.hidden = false;
-      }
-
-      form.reset();
-
-      if (submitBtn) {
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Send Message';
-      }
-    }, 900); // short delay to simulate network request
+    emailjs.sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, form)
+      .then(function () {
+        if (responseBox) {
+          responseBox.textContent =
+            'Thank you, ' + nameField.value.trim() + '! Your message has been sent. ' +
+            'We will get back to you at ' + emailField.value.trim() + ' within 1-2 business days.';
+          responseBox.className = 'response-box response-box--success';
+          responseBox.hidden = false;
+        }
+        form.reset();
+      })
+      .catch(function (error) {
+        console.error('EmailJS error:', error);
+        if (responseBox) {
+          responseBox.textContent =
+            'Sorry, something went wrong sending your message. Please try again, ' +
+            'or contact us directly by phone or email.';
+          responseBox.className = 'response-box response-box--error';
+          responseBox.hidden = false;
+        }
+      })
+      .finally(function () {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Send Message';
+        }
+      });
   });
 
-});  
-=======
-    contactResponse.textContent = 'Your email app should open now. If it does not, check your device email settings.';
-  }
-}
->>>>>>> Stashed changes
+}); 

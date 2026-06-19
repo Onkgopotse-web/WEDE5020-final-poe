@@ -1,11 +1,5 @@
 /* ==========================================================================
    main.js — Sweet Heaven's Bakery
-   Site-wide script loaded on every page.
-
-   Covers these rubric items:
-   - Skill: Dynamic Content and Search Feature
-   - Skill: Gallery Lightbox (shared logic, used on products + enquiry pages)
-   - Skill: Interactive Maps (helper used on enquiry page)
 
    References used while building this:
    - MDN Web Docs, Array.prototype.filter():
